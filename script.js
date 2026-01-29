@@ -40,11 +40,21 @@ const gameController = (() => {
 
 	const players = [player1, player2];
 	let currentPlayerIndex = 0;
+	let winner = null;
 	let isGameOver = false;
+
+	const getGameState = () => {
+		return {
+			currentPlayer: getCurrentPlayer(),
+			winner: winner,
+			isGameOver: isGameOver,
+			isDraw: isGameOver && !winner
+		};
+	};
 
 	const getCurrentPlayer = () => {
 		return players[currentPlayerIndex];
-	}
+	};
 
 	const makeMove = (index) => {
 		if (isGameOver) {
@@ -59,15 +69,13 @@ const gameController = (() => {
 
 		if (isWinner()) {
 			isGameOver = true;
-			return true;
-		}
-
-		if (isDraw()) {
+			winner = getCurrentPlayer();
+		} else if (isDraw()) {
 			isGameOver = true;
-			return true;
+		} else {
+			switchPlayer();
 		}
 
-		switchPlayer();
 		return true;
 	};
 
@@ -103,8 +111,15 @@ const gameController = (() => {
 	const startGame = () => {
 		gameBoard.reset();
 		currentPlayerIndex = 0;
+		winner = null;
+		winningLine = null;
 		isGameOver = false;
 	};
 
-	return { startGame, makeMove, getCurrentPlayer };
+	return {
+		startGame,
+		makeMove,
+		getGameState
+	};
+})();
 })();
