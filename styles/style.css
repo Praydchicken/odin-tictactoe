@@ -1,0 +1,19 @@
+.board {
+	margin: 0 auto;
+	width: 500px;
+	height: 500px;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	grid-template-rows: repeat(3, 1fr);
+	gap: 8px;
+	font-weight: 700;
+	font-size: 5rem;
+}
+
+.board__cell {
+	cursor: pointer;
+	align-content: center;
+	text-align: center;
+	outline: 2px solid black;
+	border-radius: 4px;
+}
