@@ -122,4 +122,46 @@ const gameController = (() => {
 		getGameState
 	};
 })();
+
+const displayController = (() => {
+	const boardDisplay = document.querySelector('.board');
+	const cellDisplay = document.querySelectorAll('.board__cell');
+	const statusDisplay = document.querySelector('.game-status');
+
+	const handleCellClick = (event) => {
+		const cell = event.target.closest('.board__cell');
+
+		if (!cell) {
+			return;
+		}
+
+		gameController.makeMove(cell.dataset.index);
+		renderStatusDisplay();
+		renderBoardDisplay();
+	}
+
+	boardDisplay.addEventListener('click', handleCellClick);
+
+	const renderBoardDisplay = () => {
+		const board = gameBoard.getBoard();
+
+		cellDisplay.forEach((cell, index) => {
+			cell.textContent = board[index];
+		})
+	};
+
+	const renderStatusDisplay = () => {
+		const { currentPlayer, isDraw ,winner } = gameController.getGameState();
+
+		if (winner) {
+			statusDisplay.textContent = `${winner.name} Won!`;
+		}
+		else if (isDraw) {
+			statusDisplay.textContent = "It's a Draw!";
+		} else {
+			statusDisplay.textContent = `${currentPlayer.name}'s Turn`;
+		}
+	}
+
+	renderStatusDisplay();
 })();
