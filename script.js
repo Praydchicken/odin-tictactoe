@@ -3,14 +3,15 @@ const createPlayer = (name, marker) => {
 }
 
 const gameBoard = (() => {
-	let board = new Array(9).fill('');
+	const BOARD_SIZE = 9;
+	let board = Array(BOARD_SIZE).fill('');
 
 	const getBoard = () => {
 		return [...board];
 	}
 
 	const placeMarker = (index, marker) => {
-		if (index < 0 || index >= board.length) {
+		if (index < 0 || index >= BOARD_SIZE) {
 			return false;
 		}
 
@@ -23,10 +24,14 @@ const gameBoard = (() => {
 	}
 
 	const reset = () => {
-		board = new Array(9).fill('');
+		board = Array(BOARD_SIZE).fill('');
 	}
 
-	return { getBoard, placeMarker, reset };
+	return {
+		getBoard,
+		placeMarker,
+		reset
+	};
 })();
 
 const gameController = (() => {
