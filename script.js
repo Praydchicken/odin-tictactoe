@@ -93,7 +93,8 @@ const gameController = (() => {
 			return false;
 		}
 
-		const validMove = gameBoard.placeMarker(index, getCurrentPlayer().marker);
+		const currentPlayer = getCurrentPlayer();
+		const validMove = gameBoard.placeMarker(index, currentPlayer.getMarker());
 
 		if (!validMove) {
 			return false;
@@ -101,7 +102,7 @@ const gameController = (() => {
 
 		if (isWinner()) {
 			isGameOver = true;
-			winner = getCurrentPlayer();
+			winner = currentPlayer.getName();
 		} else if (isDraw()) {
 			isGameOver = true;
 		} else {
@@ -151,7 +152,8 @@ const gameController = (() => {
 	return {
 		startGame,
 		makeMove,
-		getGameState
+		getGameState,
+		setPlayers
 	};
 })();
 
