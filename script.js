@@ -78,6 +78,12 @@ const gameController = (() => {
 		};
 	};
 
+	const setPlayers = (name1, name2) => {
+		const player1 = createPlayer(name1 || 'Player 1', 'X');
+		const player2 = createPlayer(name2 || 'Player 2', 'O');
+		players = [player1, player2];
+	};
+
 	const getCurrentPlayer = () => {
 		return players[currentPlayerIndex];
 	};
