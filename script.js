@@ -35,11 +35,11 @@ const gameBoard = (() => {
 		return [...board];
 	}
 
-	const placeMarker = (index, marker) => {
-		if (index < 0 || index >= BOARD_SIZE) {
-			return false;
-		}
+	const getBoardCell = (index) => {
+		return board[index];
+	}
 
+	const placeMarker = (index, marker) => {
 		if (board[index]) {
 			return false;
 		}
@@ -54,6 +54,7 @@ const gameBoard = (() => {
 
 	return {
 		getBoard,
+		getBoardCell,
 		placeMarker,
 		reset
 	};
