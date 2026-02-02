@@ -1,5 +1,30 @@
 const createPlayer = (name, marker) => {
-	return { name, marker };
+	let score = 0;
+
+	const getName = () => {
+		return name;
+	}
+
+	const getMarker = () => {
+		return marker;
+	}
+
+	const getScore = () => {
+		return score;
+	}
+
+	const addScore = () => {
+		score++;
+		return score;
+	};
+
+
+	return {
+		getName,
+		getMarker,
+		getScore,
+		addScore
+	};
 }
 
 const gameBoard = (() => {
