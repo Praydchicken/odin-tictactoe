@@ -26,6 +26,10 @@ const gameBoard = (() => {
 	}
 
 	const placeMarker = (index, marker) => {
+		if (index < 0 || index >= BOARD_SIZE) {
+			return false;
+		}
+
 		if (board[index]) {
 			return false;
 		}
