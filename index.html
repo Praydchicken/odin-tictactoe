@@ -13,16 +13,37 @@
 			<h2 class="game-status">TIC TAC TOE</h2>
 	</header>
 	<main>
-		<div class="board">
-			<div class="board__cell" data-index="0"></div>
-			<div class="board__cell" data-index="1"></div>
-			<div class="board__cell" data-index="2"></div>
-			<div class="board__cell" data-index="3"></div>
-			<div class="board__cell" data-index="4"></div>
-			<div class="board__cell" data-index="5"></div>
-			<div class="board__cell" data-index="6"></div>
-			<div class="board__cell" data-index="7"></div>
-			<div class="board__cell" data-index="8"></div>
+		<div class="game-container">
+			<div class="board">
+				<div class="board__cell" data-index="0"></div>
+				<div class="board__cell" data-index="1"></div>
+				<div class="board__cell" data-index="2"></div>
+				<div class="board__cell" data-index="3"></div>
+				<div class="board__cell" data-index="4"></div>
+				<div class="board__cell" data-index="5"></div>
+				<div class="board__cell" data-index="6"></div>
+				<div class="board__cell" data-index="7"></div>
+				<div class="board__cell" data-index="8"></div>
+			</div>
+		</div>
+		<div class="start-modal">
+			<div class="menu-start">
+				<h1>TIC TAC TOE</h1>
+				<form action="#" method="submit">
+					<div>
+						<label for="player-1">Player 1's Name</label>
+						<input type="text" name="player-1"  id="player-1">
+					</div>
+					<div>
+						<label for="player-2">Player 2's Name</label>
+						<input type="text" name="player-2"  id="player-2">
+					</div>
+					<button type="submit">Start Game</button>
+				</form>
+			</div>
+		</div>
+		<div class="end-button">
+			<button>RESTART GAME</button>
 		</div>
 	</main>
 </body>
