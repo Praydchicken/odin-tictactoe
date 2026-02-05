@@ -215,6 +215,8 @@ const displayController = (() => {
 	};
 
 	boardDisplay.addEventListener('click', handleCellClick);
+	startModal.addEventListener('submit', handleStartClick);
+	restartButton.addEventListener('click', handleRestartClick);
 
 	const resetBoardDisplay = () => {
 		const board = gameBoard.getBoard();
