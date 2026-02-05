@@ -51,10 +51,7 @@ const gameBoard = (() => {
 })();
 
 const gameController = (() => {
-	const player1 = createPlayer('Player 1', 'X');
-	const player2 = createPlayer('Player 2', 'O');
-
-	const players = [player1, player2];
+	let players = [];
 	let currentPlayerIndex = 0;
 	let winner = null;
 	let isGameOver = false;
@@ -78,30 +75,6 @@ const gameController = (() => {
 		return players[currentPlayerIndex];
 	};
 
-	const makeMove = (index) => {
-		if (isGameOver) {
-			return false;
-		}
-
-		const currentPlayer = getCurrentPlayer();
-		const validMove = gameBoard.placeMarker(index, currentPlayer.getMarker());
-
-		if (!validMove) {
-			return false;
-		}
-
-		if (isWinner()) {
-			isGameOver = true;
-			winner = currentPlayer.getName();
-		} else if (isDraw()) {
-			isGameOver = true;
-		} else {
-			switchPlayer();
-		}
-
-		return true;
-	};
-
 	const isWinner = () => {
 		const winConditions = [
 			[0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
@@ -119,28 +92,51 @@ const gameController = (() => {
 		}
 
 		return false;
-	}
+	};
 
 	const isDraw = () => {
 		const board = gameBoard.getBoard();
 
 		return board.every(cell => cell !== '');
-	}
+	};
 
 	const switchPlayer = () => {
 		currentPlayerIndex = currentPlayerIndex === 0 ? 1 : 0;
 	};
 
-	const startGame = () => {
+	const makeMove = (index) => {
+		if (isGameOver) {
+			return false;
+		}
+
+		const currentPlayer = getCurrentPlayer();
+		const validMove = gameBoard.placeMarker(index, currentPlayer.getMarker());
+
+		if (!validMove) {
+			return false;
+		}
+
+		if (isWinner()) {
+			isGameOver = true;
+			winner = currentPlayer;
+		} else if (isDraw()) {
+			isGameOver = true;
+		} else {
+			switchPlayer();
+		}
+
+		return true;
+	};
+
+	const reset = () => {
 		gameBoard.reset();
 		currentPlayerIndex = 0;
 		winner = null;
-		winningLine = null;
 		isGameOver = false;
 	};
 
 	return {
-		startGame,
+		reset,
 		makeMove,
 		getGameState,
 		setPlayers
