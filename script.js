@@ -148,6 +148,48 @@ const displayController = (() => {
 	const cellDisplay = document.querySelectorAll('.board__cell');
 	const statusDisplay = document.querySelector('.game-status');
 
+	const startModal = document.querySelector('.start-modal');
+	const restartButton = document.querySelector('.end-button');
+
+	const form = new FormData(startModal.querySelector('form'));
+
+	const showStartModal = () => {
+		startModal.style.display = 'flex';
+	};
+
+	const hideStartModal = () => {
+		startModal.style.display = 'none';
+	};
+
+	const showRestartButton = () => {
+		restartButton.style.display = 'flex';
+	}
+
+	const hideRestartButton = () => {
+		restartButton.style.display = 'none';
+	}
+
+	const handleStartClick = (event) => {
+		event.preventDefault();
+
+		const player1Name = form.get('player-1');
+		const player2Name = form.get('player-2');
+
+		gameController.setPlayers(player1Name, player2Name);
+
+		hideStartModal();
+		renderStatusDisplay();
+	};
+
+	const handleRestartClick = () => {
+		gameController.reset();
+
+		resetStatusDisplay();
+		resetBoardDisplay();
+		showStartModal();
+		hideRestartButton();
+	}
+
 	const handleCellClick = (event) => {
 		const cell = event.target.closest('.board__cell');
 
@@ -155,33 +197,56 @@ const displayController = (() => {
 			return;
 		}
 
-		gameController.makeMove(cell.dataset.index);
+		const index = Number(cell.dataset.index);
+		const moveSuccess = gameController.makeMove(index);
+
+		if (!moveSuccess) {
+			return;
+		}
+
+		renderCellDisplay(index);
 		renderStatusDisplay();
-		renderBoardDisplay();
-	}
+
+		const { isGameOver } = gameController.getGameState();
+
+		if (isGameOver) {
+			showRestartButton();
+		}
+	};
 
 	boardDisplay.addEventListener('click', handleCellClick);
 
-	const renderBoardDisplay = () => {
+	const resetBoardDisplay = () => {
 		const board = gameBoard.getBoard();
 
 		cellDisplay.forEach((cell, index) => {
 			cell.textContent = board[index];
-		})
+		});
+	};
+
+	const renderCellDisplay = (index) => {
+		const cell = gameBoard.getBoardCell(index);
+		cellDisplay[index].textContent = cell;
 	};
 
 	const renderStatusDisplay = () => {
-		const { currentPlayer, isDraw, winner, } = gameController.getGameState();
+		const { currentPlayer, isDraw, winner } = gameController.getGameState();
+
+		let message = '';
 
 		if (winner) {
-			statusDisplay.textContent = `${currentPlayer.getName()} Won!`;
+			message = `${winner.getName()} Won!`;
 		}
 		else if (isDraw) {
-			statusDisplay.textContent = "It's a Draw!";
+			message = "It's a Draw!";
 		} else {
-			statusDisplay.textContent = `${currentPlayer.getName()}'s Turn`;
+			message = `${currentPlayer.getName()}'s Turn`;
 		}
+
+		statusDisplay.textContent = message;
 	};
 
-	renderStatusDisplay();
+	const resetStatusDisplay = () => {
+		statusDisplay.textContent = 'TIC TAC TOE';
+	};
 })();
