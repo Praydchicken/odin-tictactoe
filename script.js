@@ -1,6 +1,4 @@
 const createPlayer = (name, marker) => {
-	let score = 0;
-
 	const getName = () => {
 		return name;
 	}
@@ -9,21 +7,9 @@ const createPlayer = (name, marker) => {
 		return marker;
 	}
 
-	const getScore = () => {
-		return score;
-	}
-
-	const addScore = () => {
-		score++;
-		return score;
-	};
-
-
 	return {
 		getName,
 		getMarker,
-		getScore,
-		addScore
 	};
 }
 
@@ -185,17 +171,17 @@ const displayController = (() => {
 	};
 
 	const renderStatusDisplay = () => {
-		const { currentPlayer, isDraw ,winner } = gameController.getGameState();
+		const { currentPlayer, isDraw, winner, } = gameController.getGameState();
 
 		if (winner) {
-			statusDisplay.textContent = `${winner.name} Won!`;
+			statusDisplay.textContent = `${currentPlayer.getName()} Won!`;
 		}
 		else if (isDraw) {
 			statusDisplay.textContent = "It's a Draw!";
 		} else {
-			statusDisplay.textContent = `${currentPlayer.name}'s Turn`;
+			statusDisplay.textContent = `${currentPlayer.getName()}'s Turn`;
 		}
-	}
+	};
 
 	renderStatusDisplay();
 })();
